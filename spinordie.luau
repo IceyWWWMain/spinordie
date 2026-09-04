@@ -7,6 +7,7 @@ local mainwin = Rayfield:CreateWindow({
 
 local maintab = mainwin:CreateTab({ name = "Main" })
 local statstab = mainwin:CreateTab({ name = "Stats" })
+local credits = mainwin:CreateTab({ name = "Credits "})
 
 local gunList = {}
 local selectedGunIndex = 1
@@ -198,6 +199,16 @@ statstab:CreateButton({
         leaderstatsEvent:FireServer("Cash", cashAmount)
         print("Added " .. cashAmount .. " Cash")
     end,
+})
+
+credits:CreateText({
+    name = "Credits",
+    text = "By IceyWWW, Join the Discord server if you find any bugs, made with ❤️",
+})
+
+credits:CreateText({
+  name = "Discord Server",
+  text = "https://discord.gg/B5qyFzPgmT Go to Robloxscripts if you don't wanna type it."
 })
 
 
