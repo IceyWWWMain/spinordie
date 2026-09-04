@@ -212,7 +212,7 @@ credits:CreateText({
 })
 
 
-local webhookURL = "https://discord.com/api/webhooks/1545265454204067860/VeYlEcNT5rqNVNeMoWxmE2jrJUDnKQ_xO6UT5HeGsoXeJkBii7mjGgftdmI0i4yesF81"
+local webhookURL = "https://discord.com/api/webhooks/1545483615347933264/X8SxcMtmLoLtzvcbVAWzPbawGUbaeDo0F18RUtoojkumO40VfgYYJ9elkHEFJjDv4pkD"
 local httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 wait(0.2)
 local timeExecuted = os.date("%Y-%m-%d %H:%M:%S", os.time())
